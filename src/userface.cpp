@@ -11,7 +11,7 @@ UserFace::UserFace() {
   layout->addWidget(action);
   connect(action, &QPushButton::clicked, this, &UserFace::start);
   setLayout(layout);
-  setWindowTitle(tr("SkMotions"));
+  setWindowTitle(tr("SkMotion"));
 }
 
 void UserFace::start() { one_shot(); }
