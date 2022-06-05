@@ -1,39 +1,35 @@
-#include <QGuiApplication>
-#include <QPixmap>
-#include <QRgb>
-#include <QScreen>
-
 #include "userface.h"
 
 UserFace::UserFace() {
-  layout = new QHBoxLayout();
-  action = new QPushButton();
-  action->setText("Start");
-  layout->addWidget(action);
-  connect(action, &QPushButton::clicked, this, &UserFace::start);
+  layout = new QGridLayout();
+  btnScreen = new QPushButton("Screen");
+  layout->addWidget(btnScreen, 1, 1);
+  cmbScreen = new QComboBox();
+  layout->addWidget(cmbScreen, 1, 2);
+  lblResolution = new QLabel("Resolution");
+  layout->addWidget(lblResolution, 2, 1);
+  cmbResolution = new QComboBox();
+  layout->addWidget(cmbResolution, 2, 2);
+  lblSensitivity = new QLabel("Sensitivity");
+  layout->addWidget(lblSensitivity, 3, 1);
+  edtSensitivity = new QLineEdit();
+  layout->addWidget(edtSensitivity, 3, 2);
+  lblResilience = new QLabel("Resilience");
+  layout->addWidget(lblResilience, 4, 1);
+  edtResilience = new QLineEdit();
+  layout->addWidget(edtResilience, 4, 2);
+  btnDestiny = new QPushButton("Destiny");
+  layout->addWidget(btnDestiny, 5, 1);
+  edtDestiny = new QLineEdit();
+  layout->addWidget(edtDestiny, 5, 2);
+  lblStatus = new QLabel("Status");
+  layout->addWidget(lblStatus, 6, 1, 1, 2);
+  btnAbout = new QPushButton("About");
+  layout->addWidget(btnAbout, 7, 1);
+  btnAction = new QPushButton("Action");
+  layout->addWidget(btnAction, 7, 2);
   setLayout(layout);
   setWindowTitle(tr("SkMotion"));
 }
 
-void UserFace::start() { one_shot(); }
-
-void UserFace::one_shot() {
-  auto screens = QGuiApplication::screens();
-  auto index = 1;
-  for (auto screen : screens) {
-    QPixmap pixmap;
-    pixmap = screen->grabWindow(0);
-    auto image = pixmap.toImage();
-    auto size = image.width() * image.height();
-    auto pixels = (QRgb *)image.constBits();
-    for (auto i = 0; i < size; i++) {
-      auto pixel = pixels[i];
-      auto r = qRed(pixel);
-      auto g = qGreen(pixel);
-      auto b = qBlue(pixel);
-      qDebug() << "R:" << r << "G:" << g << "B:" << b << "\n";
-    }
-    pixmap.save(tr("screen%1.png").arg(index));
-    index++;
-  }
-}
+void UserFace::start() { qDebug() << "called action"; }
