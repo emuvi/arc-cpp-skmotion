@@ -266,7 +266,7 @@ QMenu::separator {
 int main(int argc, char **argv) {
   QApplication app(argc, argv);
   app.setStyleSheet(mainStyles);
-  auto face = new UserFace();
-  face->show();
+  UserFace face;
+  face.show();
   return app.exec();
 }
