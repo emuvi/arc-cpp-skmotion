@@ -20,6 +20,6 @@ target_include_directories(skmotion PUBLIC "include")
 target_link_libraries(skmotion Qt::Widgets)
 set_target_properties(skmotion PROPERTIES
     CXX_STANDARD 17
-    WIN32_EXECUTABLE ON
-    MACOSX_BUNDLE ON
+    # WIN32_EXECUTABLE ON
+    # MACOSX_BUNDLE ON
 )
