@@ -1,5 +1,5 @@
-#ifndef INTERFACE_H
-#define INTERFACE_H
+#ifndef USERFACE_H
+#define USERFACE_H
 
 #include <QComboBox>
 #include <QDialog>
@@ -35,4 +35,4 @@ private slots:
   void start();
 };
 
-#endif // INTERFACE_H
+#endif // USERFACE_H
