@@ -17,7 +17,6 @@ Recorder::Recorder(Expected expected, QObject *parent)
       break;
     }
   }
-  m_shot_number = 1;
   m_last_shot = QDateTime::currentMSecsSinceEpoch();
   connect(this, &QThread::finished, this, &QObject::deleteLater);
 }
@@ -25,16 +24,14 @@ Recorder::Recorder(Expected expected, QObject *parent)
 void Recorder::start() {
   m_running = true;
   QThread::start();
+  m_streamer.start();
 }
 
 void Recorder::run() {
   while (m_running) {
     if (is_in_time()) {
       auto shot = take_a_shot();
-      auto file_name =
-          QString("%1/%2.png").arg(m_expected.destiny).arg(m_shot_number);
-      shot->save(file_name, "PNG");
-      m_shot_number++;
+      m_streamer.push(shot);
     }
   }
 }
@@ -53,7 +50,10 @@ QPixmap *Recorder::take_a_shot() {
   return new QPixmap(m_screen_ptr->grabWindow(0));
 }
 
-void Recorder::stop() { m_running = false; }
+void Recorder::stop() {
+  m_running = false;
+  m_streamer.stop();
+}
 
 void check_shots() {
   auto screens = QGuiApplication::screens();

@@ -1,9 +1,12 @@
 #ifndef __STREAMER_H__
 #define __STREAMER_H__
 
+#include <QList>
+#include <QMutex>
 #include <QPixmap>
 #include <QThread>
-#include <qpixmap.h>
+
+#include <atomic>
 
 #include "expected.h"
 
@@ -12,6 +15,10 @@ class Streamer : public QThread {
 
 private:
   const Expected m_expected;
+  std::atomic<bool> m_running;
+  QMutex mutex;
+  QList<QPixmap *> shots;
+  qint64 m_shot_number;
   QPixmap *pop();
 
 protected:
@@ -19,7 +26,9 @@ protected:
 
 public:
   explicit Streamer(Expected expected, QObject *parent = nullptr);
+  void start();
   void push(QPixmap *shot);
+  void stop();
 };
 
 #endif // __STREAMER_H__

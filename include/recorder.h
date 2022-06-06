@@ -18,10 +18,9 @@ class Recorder : public QThread {
 
 private:
   const Expected m_expected;
-  const Streamer m_streamer;
+  Streamer m_streamer;
   std::atomic<bool> m_running;
   QScreen *m_screen_ptr;
-  qint64 m_shot_number;
   qint64 m_last_shot;
   bool is_in_time();
   QPixmap *take_a_shot();
