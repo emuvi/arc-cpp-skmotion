@@ -1,7 +1,6 @@
 #include <QDebug>
 #include <QImage>
 #include <QPixmap>
-#include <QRgb>
 
 #include "streamer.h"
 
