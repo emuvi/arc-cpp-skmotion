@@ -7,12 +7,13 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QWidget>
 
 class UserFace : public QDialog {
   Q_OBJECT
 
 public:
-  UserFace();
+  explicit UserFace(QWidget *parent = nullptr);
 
 private:
   QGridLayout *layout;

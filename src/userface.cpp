@@ -1,6 +1,6 @@
 #include "userface.h"
 
-UserFace::UserFace() {
+UserFace::UserFace(QWidget *parent) : QDialog(parent) {
   layout = new QGridLayout();
   btnScreen = new QPushButton("Screen");
   layout->addWidget(btnScreen, 1, 1);
@@ -26,7 +26,7 @@ UserFace::UserFace() {
   layout->addWidget(lblStatus, 6, 1, 1, 2);
   btnAbout = new QPushButton("About");
   layout->addWidget(btnAbout, 7, 1);
-  btnAction = new QPushButton("Action");
+  btnAction = new QPushButton("Start");
   layout->addWidget(btnAction, 7, 2);
   setLayout(layout);
   setWindowTitle(tr("SkMotion"));
