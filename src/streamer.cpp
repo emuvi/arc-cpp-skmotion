@@ -15,13 +15,31 @@ void Streamer::start() {
 }
 
 void Streamer::run() {
+  QImage *lastSaved = nullptr;
   while (true) {
     auto shot = pop();
     if (shot != nullptr) {
-      auto file_name =
-          QString("%1/%2.png").arg(m_expected.destiny).arg(m_shot_number);
-      shot->save(file_name, "PNG");
-      m_shot_number++;
+      auto actualFrame = new QImage(shot->toImage());
+      delete shot;
+      bool shouldSave = true;
+      if (lastSaved != nullptr) {
+        auto difference = get_difference(lastSaved, actualFrame);
+        if (difference < m_expected.sensitivity) {
+          shouldSave = false;
+        }
+      }
+      if (shouldSave) {
+        QString filename =
+            QString("%1/%2.png").arg(m_expected.destiny).arg(m_shot_number);
+        actualFrame->save(filename);
+        m_shot_number++;
+        if (lastSaved != nullptr) {
+          delete lastSaved;
+        }
+        lastSaved = actualFrame;
+      } else {
+        delete actualFrame;
+      }
     } else if (!m_running) {
       break;
     }
@@ -53,7 +71,7 @@ void Streamer::done() {
   deleteLater();
 }
 
-double get_difference(QImage *oldFrame, QImage *newFrame) {
+double Streamer::get_difference(QImage *oldFrame, QImage *newFrame) {
   auto size = oldFrame->width() * oldFrame->height();
   auto oldBits = oldFrame->constBits();
   auto newBits = newFrame->constBits();
@@ -63,5 +81,6 @@ double get_difference(QImage *oldFrame, QImage *newFrame) {
       diff++;
     }
   }
-  return (double)diff / size;
+  auto result = (double)diff / size;
+  return result;
 }

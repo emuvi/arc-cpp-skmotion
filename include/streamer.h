@@ -20,6 +20,7 @@ private:
   QList<QPixmap *> shots;
   qint64 m_shot_number;
   QPixmap *pop();
+  double get_difference(QImage *oldFrame, QImage *newFrame);
 
 protected:
   void run() override;
