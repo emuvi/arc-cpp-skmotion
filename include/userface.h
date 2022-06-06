@@ -7,7 +7,9 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QSettings>
 #include <QWidget>
+#include <qsettings.h>
 
 class UserFace : public QDialog {
   Q_OBJECT
@@ -16,6 +18,7 @@ public:
   explicit UserFace(QWidget *parent = nullptr);
 
 private:
+  QSettings *settings;
   QGridLayout *layout;
   QPushButton *btnScreen;
   QComboBox *cmbScreen;
@@ -30,8 +33,12 @@ private:
   QLabel *lblStatus;
   QPushButton *btnAbout;
   QPushButton *btnAction;
+  void initLabels();
   void initScreens();
   void initResolutions();
+  void initSensitivity();
+  void initResilience();
+  void initDestiny();
 
 private slots:
   void doStartOrStop();
