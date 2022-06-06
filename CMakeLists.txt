@@ -11,7 +11,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(EXECUTABLE_OUTPUT_PATH "bin")
 add_executable(skmotion 
     "include/userface.h"
+    "include/recorder.h"
     "src/userface.cpp"
+    "src/recorder.cpp"
     "src/main.cpp")
 
 target_include_directories(skmotion PUBLIC "include")
