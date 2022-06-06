@@ -1,6 +1,8 @@
 #include <QGuiApplication>
+#include <QPushButton>
 #include <QScreen>
 
+#include "recorder.h"
 #include "userface.h"
 
 UserFace::UserFace(QWidget *parent) : QDialog(parent) {
@@ -34,6 +36,7 @@ UserFace::UserFace(QWidget *parent) : QDialog(parent) {
   btnAction = new QPushButton("Start", this);
   layout->addWidget(btnAction, 7, 2);
   initScreens();
+  connect(btnAction, &QPushButton::clicked, this, &UserFace::doStartOrStop);
 }
 
 void UserFace::initScreens() {
@@ -43,4 +46,12 @@ void UserFace::initScreens() {
   }
 }
 
-void UserFace::start() { qDebug() << "called action"; }
+void UserFace::doStartOrStop() {
+  auto screen = cmbScreen->currentText();
+  // auto resolution = cmbResolution->currentText();
+  // auto sensitivity = edtSensitivity->text().toInt();
+  // auto resilience = edtResilience->text().toInt();
+  // auto destiny = edtDestiny->text();
+  auto recorder = new Recorder(screen, this);
+  recorder->start();
+}

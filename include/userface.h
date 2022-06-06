@@ -33,7 +33,7 @@ private:
   void initScreens();
 
 private slots:
-  void start();
+  void doStartOrStop();
 };
 
 #endif // USERFACE_H
