@@ -5,19 +5,22 @@
 Recorder::Recorder(QString screen, QSize resolution, double sensitivity,
                    int resilience, QString destiny, QObject *parent)
     : m_screen(screen), m_resolution(resolution), m_sensitivity(sensitivity),
-      m_resilience(resilience), m_destiny(destiny), QObject(parent) {}
-
-void Recorder::start() {
-  QMessageBox::information(
-      nullptr, "Recorder",
-      "Started on screen: " + m_screen +
-          " resolution: " + QString::number(m_resolution.width()) + "x" +
-          QString::number(m_resolution.height()) +
-          " sensitivity: " + QString::number(m_sensitivity) + " resilience: " +
-          QString::number(m_resilience) + " destiny: " + m_destiny);
+      m_resilience(resilience), m_destiny(destiny), QThread(parent) {
+  connect(this, &QThread::finished, this, &QObject::deleteLater);
 }
 
-void Recorder::stop() {}
+void Recorder::start() {
+  m_running = true;
+  QThread::start();
+}
+
+void Recorder::run() {
+  while (m_running) {
+    qDebug() << "Recorder::run()";
+  }
+}
+
+void Recorder::stop() { m_running = false; }
 
 // #include <QGuiApplication>
 // #include <QPixmap>

@@ -111,7 +111,6 @@ void UserFace::doStartOrStop() {
     btnAction->setText("Stop");
   } else {
     recording->stop();
-    delete recording;
     recording = nullptr;
     btnAction->setText("Start");
   }

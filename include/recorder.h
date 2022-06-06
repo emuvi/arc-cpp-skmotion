@@ -1,11 +1,12 @@
 #ifndef __RECORDER_H__
 #define __RECORDER_H__
 
-#include <QObject>
 #include <QSize>
 #include <QString>
+#include <QThread>
+#include <atomic>
 
-class Recorder : public QObject {
+class Recorder : public QThread {
   Q_OBJECT
 
 private:
@@ -14,6 +15,10 @@ private:
   double m_sensitivity;
   int m_resilience;
   QString m_destiny;
+  std::atomic<bool> m_running;
+
+protected:
+  void run() override;
 
 public:
   explicit Recorder(QString screen, QSize size, double sensitivity,
