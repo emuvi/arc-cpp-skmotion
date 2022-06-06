@@ -9,17 +9,14 @@
 #include <QThread>
 
 #include <atomic>
-#include <qglobal.h>
+
+#include "expected.h"
 
 class Recorder : public QThread {
   Q_OBJECT
 
 private:
-  QString m_screen;
-  QSize m_resolution;
-  double m_sensitivity;
-  int m_resilience;
-  QString m_destiny;
+  const Expected m_expected;
   std::atomic<bool> m_running;
   QScreen *m_screen_ptr;
   qint64 m_shot_number;
@@ -31,8 +28,7 @@ protected:
   void run() override;
 
 public:
-  explicit Recorder(QString screen, QSize size, double sensitivity,
-                    int resilience, QString destiny, QObject *parent = nullptr);
+  explicit Recorder(Expected expected, QObject *parent = nullptr);
   void start();
   void stop();
 };

@@ -10,6 +10,7 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(EXECUTABLE_OUTPUT_PATH "bin")
 add_executable(skmotion 
+    "include/expected.h"
     "include/userface.h"
     "include/recorder.h"
     "src/userface.cpp"

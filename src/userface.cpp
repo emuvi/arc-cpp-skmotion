@@ -105,8 +105,8 @@ void UserFace::doStartOrStop() {
     auto sensitivity = edtSensitivity->text().toDouble();
     auto resilience = edtResilience->text().toInt();
     auto destiny = edtDestiny->text();
-    recording = new Recorder(screen, resolution, sensitivity, resilience,
-                             destiny, this);
+    recording = new Recorder(
+        Expected{screen, resolution, sensitivity, resilience, destiny}, this);
     recording->start();
     btnAction->setText("Stop");
   } else {

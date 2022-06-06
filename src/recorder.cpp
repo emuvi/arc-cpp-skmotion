@@ -6,15 +6,13 @@
 
 #include "recorder.h"
 
-Recorder::Recorder(QString screen, QSize resolution, double sensitivity,
-                   int resilience, QString destiny, QObject *parent)
-    : m_screen(screen), m_resolution(resolution), m_sensitivity(sensitivity),
-      m_resilience(resilience), m_destiny(destiny), QThread(parent) {
+Recorder::Recorder(Expected expected, QObject *parent)
+    : m_expected(expected), QThread(parent) {
   m_running = false;
   m_screen_ptr = nullptr;
   auto all_screens = QGuiApplication::screens();
   for (auto one_screen : all_screens) {
-    if (one_screen->name() == screen) {
+    if (one_screen->name() == m_expected.screen) {
       m_screen_ptr = one_screen;
       break;
     }
@@ -33,7 +31,8 @@ void Recorder::run() {
   while (m_running) {
     if (is_in_time()) {
       auto shot = take_a_shot();
-      auto file_name = QString("%1/%2.png").arg(m_destiny).arg(m_shot_number);
+      auto file_name =
+          QString("%1/%2.png").arg(m_expected.destiny).arg(m_shot_number);
       shot->save(file_name, "PNG");
       m_shot_number++;
     }
