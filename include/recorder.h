@@ -1,4 +1,5 @@
 #include <QObject>
+#include <QSize>
 #include <QString>
 
 class Recorder : public QObject {
@@ -6,8 +7,13 @@ class Recorder : public QObject {
 
 private:
   QString m_screen;
+  QSize m_resolution;
+  double m_sensitivity;
+  int m_resilience;
+  QString m_destiny;
 
 public:
-  explicit Recorder(QString screen, QObject *parent = nullptr);
+  explicit Recorder(QString screen, QSize size, double sensitivity,
+                    int resilience, QString destiny, QObject *parent = nullptr);
   void start();
 };

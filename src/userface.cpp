@@ -1,4 +1,3 @@
-#include <QDir>
 #include <QDoubleValidator>
 #include <QGuiApplication>
 #include <QIntValidator>
@@ -99,10 +98,12 @@ void UserFace::initDestiny() {
 
 void UserFace::doStartOrStop() {
   auto screen = cmbScreen->currentText();
-  // auto resolution = cmbResolution->currentText();
-  // auto sensitivity = edtSensitivity->text().toInt();
-  // auto resilience = edtResilience->text().toInt();
-  // auto destiny = edtDestiny->text();
-  auto recorder = new Recorder(screen, this);
+  auto resolution_all = cmbResolution->currentText().split("x");
+  auto resolution = QSize(resolution_all[0].toInt(), resolution_all[1].toInt());
+  auto sensitivity = edtSensitivity->text().toDouble();
+  auto resilience = edtResilience->text().toInt();
+  auto destiny = edtDestiny->text();
+  auto recorder =
+      new Recorder(screen, resolution, sensitivity, resilience, destiny, this);
   recorder->start();
 }
