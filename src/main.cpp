@@ -176,22 +176,6 @@ QTabBar::tab:selected {
 	background: #353535;
 }
 
-QComboBox::down-arrow {
-	border: 1px solid #5A5A5A;
-	background: #353535;
-}
-
-QComboBox::drop-down {
-	border: 1px solid #5A5A5A;
-	background: #353535;
-}
-
-QComboBox::down-arrow {
-	width: 3px;
-	height: 3px;
-	border: 1px solid #5A5A5A;
-}
-
 QAbstractSpinBox {
 	padding-right: 15px;
 }
