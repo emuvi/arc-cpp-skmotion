@@ -5,11 +5,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "C++ Launch",
-      "type": "cppdbg",
+      "type": "by-gdb",
       "request": "launch",
+      "name": "Launch(gdb)",
       "program": "${workspaceFolder}\\build\\bin\\Debug\\skmotion.exe",
-      "cwd": "${workspaceFolder}"
+      "cwd": "${workspaceRoot}"
     }
   ]
 }
