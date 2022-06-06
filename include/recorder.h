@@ -1,3 +1,6 @@
+#ifndef __RECORDER_H__
+#define __RECORDER_H__
+
 #include <QObject>
 #include <QSize>
 #include <QString>
@@ -16,4 +19,7 @@ public:
   explicit Recorder(QString screen, QSize size, double sensitivity,
                     int resilience, QString destiny, QObject *parent = nullptr);
   void start();
+  void stop();
 };
+
+#endif // __RECORDER_H__

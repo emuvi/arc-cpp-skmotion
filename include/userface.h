@@ -9,7 +9,8 @@
 #include <QPushButton>
 #include <QSettings>
 #include <QWidget>
-#include <qsettings.h>
+
+#include "recorder.h"
 
 class UserFace : public QDialog {
   Q_OBJECT
@@ -33,6 +34,7 @@ private:
   QLabel *lblStatus;
   QPushButton *btnAbout;
   QPushButton *btnAction;
+  Recorder *recording;
   void initLabels();
   void initScreens();
   void initResolutions();

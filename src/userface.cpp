@@ -5,7 +5,6 @@
 #include <QScreen>
 #include <QStandardPaths>
 
-#include "recorder.h"
 #include "userface.h"
 
 UserFace::UserFace(QWidget *parent) : QDialog(parent) {
@@ -39,6 +38,7 @@ UserFace::UserFace(QWidget *parent) : QDialog(parent) {
   layout->addWidget(btnAction, 6, 2);
   lblStatus = new QLabel("Status: Waiting to start...", this);
   layout->addWidget(lblStatus, 7, 1, 1, 2);
+  recording = nullptr;
   initLabels();
   initScreens();
   initResolutions();
@@ -97,13 +97,22 @@ void UserFace::initDestiny() {
 }
 
 void UserFace::doStartOrStop() {
-  auto screen = cmbScreen->currentText();
-  auto resolution_all = cmbResolution->currentText().split("x");
-  auto resolution = QSize(resolution_all[0].toInt(), resolution_all[1].toInt());
-  auto sensitivity = edtSensitivity->text().toDouble();
-  auto resilience = edtResilience->text().toInt();
-  auto destiny = edtDestiny->text();
-  auto recorder =
-      new Recorder(screen, resolution, sensitivity, resilience, destiny, this);
-  recorder->start();
+  if (!recording) {
+    auto screen = cmbScreen->currentText();
+    auto resolution_all = cmbResolution->currentText().split("x");
+    auto resolution =
+        QSize(resolution_all[0].toInt(), resolution_all[1].toInt());
+    auto sensitivity = edtSensitivity->text().toDouble();
+    auto resilience = edtResilience->text().toInt();
+    auto destiny = edtDestiny->text();
+    recording = new Recorder(screen, resolution, sensitivity, resilience,
+                             destiny, this);
+    recording->start();
+    btnAction->setText("Stop");
+  } else {
+    recording->stop();
+    delete recording;
+    recording = nullptr;
+    btnAction->setText("Start");
+  }
 }

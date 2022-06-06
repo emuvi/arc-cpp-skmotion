@@ -17,6 +17,8 @@ void Recorder::start() {
           QString::number(m_resilience) + " destiny: " + m_destiny);
 }
 
+void Recorder::stop() {}
+
 // #include <QGuiApplication>
 // #include <QPixmap>
 // #include <QRgb>
