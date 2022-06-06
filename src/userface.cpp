@@ -1,7 +1,12 @@
+#include <QGuiApplication>
+#include <QScreen>
+
 #include "userface.h"
 
 UserFace::UserFace(QWidget *parent) : QDialog(parent) {
+  setWindowTitle(tr("SkMotion"));
   layout = new QGridLayout(this);
+  setLayout(layout);
   btnScreen = new QPushButton("Screen", this);
   layout->addWidget(btnScreen, 1, 1);
   cmbScreen = new QComboBox(this);
@@ -28,8 +33,14 @@ UserFace::UserFace(QWidget *parent) : QDialog(parent) {
   layout->addWidget(btnAbout, 7, 1);
   btnAction = new QPushButton("Start", this);
   layout->addWidget(btnAction, 7, 2);
-  setLayout(layout);
-  setWindowTitle(tr("SkMotion"));
+  initScreens();
+}
+
+void UserFace::initScreens() {
+  auto screens = QGuiApplication::screens();
+  for (auto screen : screens) {
+    cmbScreen->addItem(screen->name());
+  }
 }
 
 void UserFace::start() { qDebug() << "called action"; }

@@ -30,6 +30,7 @@ private:
   QLabel *lblStatus;
   QPushButton *btnAbout;
   QPushButton *btnAction;
+  void initScreens();
 
 private slots:
   void start();
