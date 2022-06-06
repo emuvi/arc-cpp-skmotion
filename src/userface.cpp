@@ -36,6 +36,7 @@ UserFace::UserFace(QWidget *parent) : QDialog(parent) {
   btnAction = new QPushButton("Start", this);
   layout->addWidget(btnAction, 7, 2);
   initScreens();
+  initResolutions();
   connect(btnAction, &QPushButton::clicked, this, &UserFace::doStartOrStop);
 }
 
@@ -44,6 +45,17 @@ void UserFace::initScreens() {
   for (auto screen : screens) {
     cmbScreen->addItem(screen->name());
   }
+}
+
+void UserFace::initResolutions() {
+  cmbResolution->addItem("640x480");
+  cmbResolution->addItem("800x600");
+  cmbResolution->addItem("960x720");
+  cmbResolution->addItem("1066x600");
+  cmbResolution->addItem("1024x768");
+  cmbResolution->addItem("1280x720");
+  cmbResolution->addItem("1600x900");
+  cmbResolution->addItem("1920x1080");
 }
 
 void UserFace::doStartOrStop() {

@@ -31,6 +31,7 @@ private:
   QPushButton *btnAbout;
   QPushButton *btnAction;
   void initScreens();
+  void initResolutions();
 
 private slots:
   void doStartOrStop();
