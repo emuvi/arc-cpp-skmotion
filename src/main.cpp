@@ -5,10 +5,12 @@
 QString mainStyles = R"__STYLES__(
 * {
 	background: #333333;
-	color: #f9eeff;
+	color: #f6e5ff;
   padding: 5px;
 	border-radius: 3px;
 	border: 1px solid #f9eeff;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  font-size: 14px;
 }
 
 QLabel {
