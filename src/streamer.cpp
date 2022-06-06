@@ -1,8 +1,10 @@
+#include <QDebug>
+
 #include "streamer.h"
 
-Streamer::Streamer(Expected expected, QObject *parent)
-    : m_expected(expected), QThread(parent) {
+Streamer::Streamer(Expected expected) : m_expected(expected), QThread(nullptr) {
   m_shot_number = 1;
+  connect(this, &QThread::finished, this, &Streamer::done);
 }
 
 void Streamer::start() {
@@ -18,6 +20,8 @@ void Streamer::run() {
           QString("%1/%2.png").arg(m_expected.destiny).arg(m_shot_number);
       shot->save(file_name, "PNG");
       m_shot_number++;
+    } else if (!m_running) {
+      break;
     }
   }
 }
@@ -41,3 +45,8 @@ void Streamer::push(QPixmap *shot) {
 }
 
 void Streamer::stop() { m_running = false; }
+
+void Streamer::done() {
+  qDebug() << "done Streamer";
+  deleteLater();
+}

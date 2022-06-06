@@ -3,12 +3,13 @@
 
 #include <QRgb>
 #include <QString>
+#include <cstddef>
 
 #include "recorder.h"
 
-Recorder::Recorder(Expected expected, QObject *parent)
-    : m_expected(expected), m_streamer(expected, parent), QThread(parent) {
+Recorder::Recorder(Expected expected) : m_expected(expected), QThread(NULL) {
   m_running = false;
+  m_streamer = new Streamer(expected);
   m_screen_ptr = nullptr;
   auto all_screens = QGuiApplication::screens();
   for (auto one_screen : all_screens) {
@@ -18,20 +19,20 @@ Recorder::Recorder(Expected expected, QObject *parent)
     }
   }
   m_last_shot = QDateTime::currentMSecsSinceEpoch();
-  connect(this, &QThread::finished, this, &QObject::deleteLater);
+  connect(this, &QThread::finished, this, &Recorder::done);
 }
 
 void Recorder::start() {
   m_running = true;
   QThread::start();
-  m_streamer.start();
+  m_streamer->start();
 }
 
 void Recorder::run() {
   while (m_running) {
     if (is_in_time()) {
       auto shot = take_a_shot();
-      m_streamer.push(shot);
+      m_streamer->push(shot);
     }
   }
 }
@@ -52,7 +53,12 @@ QPixmap *Recorder::take_a_shot() {
 
 void Recorder::stop() {
   m_running = false;
-  m_streamer.stop();
+  m_streamer->stop();
+}
+
+void Recorder::done() {
+  qDebug() << "done Recorder";
+  deleteLater();
 }
 
 void check_shots() {

@@ -25,10 +25,13 @@ protected:
   void run() override;
 
 public:
-  explicit Streamer(Expected expected, QObject *parent = nullptr);
+  explicit Streamer(Expected expected);
   void start();
   void push(QPixmap *shot);
   void stop();
+
+private slots:
+  void done();
 };
 
 #endif // __STREAMER_H__

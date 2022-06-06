@@ -18,7 +18,7 @@ class Recorder : public QThread {
 
 private:
   const Expected m_expected;
-  Streamer m_streamer;
+  Streamer *m_streamer;
   std::atomic<bool> m_running;
   QScreen *m_screen_ptr;
   qint64 m_last_shot;
@@ -29,9 +29,12 @@ protected:
   void run() override;
 
 public:
-  explicit Recorder(Expected expected, QObject *parent = nullptr);
+  explicit Recorder(Expected expected);
   void start();
   void stop();
+
+private slots:
+  void done();
 };
 
 #endif // __RECORDER_H__

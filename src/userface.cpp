@@ -106,7 +106,7 @@ void UserFace::doStartOrStop() {
     auto resilience = edtResilience->text().toInt();
     auto destiny = edtDestiny->text();
     recording = new Recorder(
-        Expected{screen, resolution, sensitivity, resilience, destiny}, this);
+        Expected{screen, resolution, sensitivity, resilience, destiny});
     recording->start();
     btnAction->setText("Stop");
   } else {
