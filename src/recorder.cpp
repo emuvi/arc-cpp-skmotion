@@ -3,7 +3,6 @@
 
 #include <QRgb>
 #include <QString>
-#include <cstddef>
 
 #include "recorder.h"
 
@@ -20,6 +19,8 @@ Recorder::Recorder(QString screen, QSize resolution, double sensitivity,
       break;
     }
   }
+  m_shot_number = 1;
+  m_last_shot = QDateTime::currentMSecsSinceEpoch();
   connect(this, &QThread::finished, this, &QObject::deleteLater);
 }
 
@@ -30,13 +31,28 @@ void Recorder::start() {
 
 void Recorder::run() {
   while (m_running) {
-    qDebug() << "Recorder::run()";
+    if (is_in_time()) {
+      auto shot = take_a_shot();
+      auto file_name = QString("%1/%2.png").arg(m_destiny).arg(m_shot_number);
+      shot.save(file_name, "PNG");
+      m_shot_number++;
+    }
   }
 }
 
-void Recorder::stop() { m_running = false; }
+bool Recorder::is_in_time() {
+  auto now = QDateTime::currentMSecsSinceEpoch();
+  if (now - m_last_shot > 1000) {
+    m_last_shot = now;
+    return true;
+  } else {
+    return false;
+  }
+}
 
-QPixmap Recorder::take_one_shot() { return m_screen_ptr->grabWindow(0); }
+QPixmap Recorder::take_a_shot() { return m_screen_ptr->grabWindow(0); }
+
+void Recorder::stop() { m_running = false; }
 
 void check_shots() {
   auto screens = QGuiApplication::screens();

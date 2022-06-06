@@ -1,6 +1,7 @@
 #ifndef __RECORDER_H__
 #define __RECORDER_H__
 
+#include <QDateTime>
 #include <QPixmap>
 #include <QScreen>
 #include <QSize>
@@ -8,6 +9,7 @@
 #include <QThread>
 
 #include <atomic>
+#include <qglobal.h>
 
 class Recorder : public QThread {
   Q_OBJECT
@@ -20,7 +22,10 @@ private:
   QString m_destiny;
   std::atomic<bool> m_running;
   QScreen *m_screen_ptr;
-  QPixmap take_one_shot();
+  qint64 m_shot_number;
+  qint64 m_last_shot;
+  bool is_in_time();
+  QPixmap take_a_shot();
 
 protected:
   void run() override;
