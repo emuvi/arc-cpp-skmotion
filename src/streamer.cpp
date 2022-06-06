@@ -1,4 +1,7 @@
 #include <QDebug>
+#include <QImage>
+#include <QPixmap>
+#include <QRgb>
 
 #include "streamer.h"
 
@@ -49,4 +52,17 @@ void Streamer::stop() { m_running = false; }
 void Streamer::done() {
   qDebug() << "done Streamer";
   deleteLater();
+}
+
+double get_difference(QImage *oldFrame, QImage *newFrame) {
+  auto size = oldFrame->width() * oldFrame->height();
+  auto oldBits = oldFrame->constBits();
+  auto newBits = newFrame->constBits();
+  auto diff = 0;
+  for (auto i = 0; i < size; i++) {
+    if (oldBits[i] != newBits[i]) {
+      diff++;
+    }
+  }
+  return (double)diff / size;
 }
