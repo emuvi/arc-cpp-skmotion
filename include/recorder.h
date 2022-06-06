@@ -11,12 +11,14 @@
 #include <atomic>
 
 #include "expected.h"
+#include "streamer.h"
 
 class Recorder : public QThread {
   Q_OBJECT
 
 private:
   const Expected m_expected;
+  const Streamer m_streamer;
   std::atomic<bool> m_running;
   QScreen *m_screen_ptr;
   qint64 m_shot_number;

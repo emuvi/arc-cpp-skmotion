@@ -7,7 +7,7 @@
 #include "recorder.h"
 
 Recorder::Recorder(Expected expected, QObject *parent)
-    : m_expected(expected), QThread(parent) {
+    : m_expected(expected), m_streamer(expected, parent), QThread(parent) {
   m_running = false;
   m_screen_ptr = nullptr;
   auto all_screens = QGuiApplication::screens();

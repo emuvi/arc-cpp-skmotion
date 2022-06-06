@@ -13,8 +13,10 @@ add_executable(skmotion
     "include/expected.h"
     "include/userface.h"
     "include/recorder.h"
+    "include/streamer.h"
     "src/userface.cpp"
     "src/recorder.cpp"
+    "src/streamer.cpp"
     "src/main.cpp")
 
 target_include_directories(skmotion PUBLIC "include")
