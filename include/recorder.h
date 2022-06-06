@@ -25,7 +25,7 @@ private:
   qint64 m_shot_number;
   qint64 m_last_shot;
   bool is_in_time();
-  QPixmap take_a_shot();
+  QPixmap *take_a_shot();
 
 protected:
   void run() override;

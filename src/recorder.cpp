@@ -34,7 +34,7 @@ void Recorder::run() {
     if (is_in_time()) {
       auto shot = take_a_shot();
       auto file_name = QString("%1/%2.png").arg(m_destiny).arg(m_shot_number);
-      shot.save(file_name, "PNG");
+      shot->save(file_name, "PNG");
       m_shot_number++;
     }
   }
@@ -50,7 +50,9 @@ bool Recorder::is_in_time() {
   }
 }
 
-QPixmap Recorder::take_a_shot() { return m_screen_ptr->grabWindow(0); }
+QPixmap *Recorder::take_a_shot() {
+  return new QPixmap(m_screen_ptr->grabWindow(0));
+}
 
 void Recorder::stop() { m_running = false; }
 
