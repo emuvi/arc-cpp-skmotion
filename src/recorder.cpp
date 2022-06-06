@@ -1,3 +1,15 @@
+#include <QMessageBox>
+
+#include "recorder.h"
+
+Recorder::Recorder(QString screen, QObject *parent)
+    : m_screen(screen), QObject(parent) {}
+
+void Recorder::start() {
+  QMessageBox::information(nullptr, "Recorder",
+                           "Started on screen: " + m_screen);
+}
+
 // #include <QGuiApplication>
 // #include <QPixmap>
 // #include <QRgb>
