@@ -1,9 +1,12 @@
 #ifndef __RECORDER_H__
 #define __RECORDER_H__
 
+#include <QPixmap>
+#include <QScreen>
 #include <QSize>
 #include <QString>
 #include <QThread>
+
 #include <atomic>
 
 class Recorder : public QThread {
@@ -16,6 +19,8 @@ private:
   int m_resilience;
   QString m_destiny;
   std::atomic<bool> m_running;
+  QScreen *m_screen_ptr;
+  QPixmap take_one_shot();
 
 protected:
   void run() override;
